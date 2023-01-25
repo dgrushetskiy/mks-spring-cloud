@@ -17,6 +17,7 @@
     <properties>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud-netflix-eureka>3.1.4</spring-cloud-netflix-eureka>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <springframework.cloud>3.1.5</springframework.cloud>
         <java.version>11</java.version>
@@ -47,7 +48,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-            <version>3.1.4</version>
+            <version>${spring-cloud-netflix-eureka}</version>
         </dependency>
 
         <dependency>
