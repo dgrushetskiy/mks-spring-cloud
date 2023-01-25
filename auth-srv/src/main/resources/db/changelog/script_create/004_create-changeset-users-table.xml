@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="db/changelog/changelog.xml"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <property name="uuid_type" value="uuid" dbms="postgresql"/>
+    <property name="uuid_type" value="uuid" dbms="h2"/>
+
+    <property name="uuid_function" value="gen_random_uuid()" dbms="postgresql"/>
+    <property name="uuid_function" value="uuid()" dbms="h2"/>
+
+    <!-- Здесь мы позже напишем скрипт -->
+    <changeSet id="drop-table-users" author="dg">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="users"/>
+        </preConditions>
+        <dropTable cascadeConstraints="true" tableName="users" schemaName="auth"/>
+    </changeSet>
+    <!-- create table users -->
+    <changeSet id="create-table-users" author="dg">
+        <createTable tableName="users" schemaName="auth">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_users"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_user_uuid_unq"/>
+            </column>
+            <column name="username" type="varchar(200)">
+                <constraints nullable="false"  unique="true" uniqueConstraintName="idx_user_username_unq"/>
+            </column>
+            <column name="email" type="varchar(200)">
+                <constraints nullable="false"  unique="true"  uniqueConstraintName="idx_user_email_unq"/>
+            </column>
+            <column name="passwd" type="varchar(512)">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone" type="varchar(15)">
+                <constraints nullable="false"  unique="true" uniqueConstraintName="idx_user_phone_unq"/>
+            </column>
+        </createTable>
+        <!-- Добавляем вторичный ключ user_id -->
+        <addForeignKeyConstraint baseTableSchemaName="auth"
+                                 baseColumnNames="user_id"
+                                 baseTableName="users_roles"
+                                 constraintName="fk_users_roles_users"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+
+        <!-- Добавляем вторичный ключ uuid one to one  -->
+
+        <!-- Добавляем вторичный ключ billing_uuid -->
+        <addForeignKeyConstraint baseTableSchemaName="auth"
+                                 baseColumnNames="user_id"
+                                 baseTableName="users_bills"
+                                 constraintName="fk_users_bills_users"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+</databaseChangeLog>

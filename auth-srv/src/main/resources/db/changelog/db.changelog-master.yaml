@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - includeAll:
+      path: db/changelog/script_create/
+  - includeAll:
+      path: db/changelog/script_insert/
