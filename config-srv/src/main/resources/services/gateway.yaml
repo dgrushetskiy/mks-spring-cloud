@@ -1,0 +1,36 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+
+  routes:
+    auth-srv:
+      path: /auth/**
+      serviceId: auth-srv-app
+      stripPrefix: false
+
+    bill-srv:
+      path: /bills/**
+      serviceId: bill-srv
+      stripPrefix: false
+
+    deposit-srv:
+      path: /deposits/**
+      serviceId: deposit-srv
+      stripPrefix: false
+
+server:
+  port: 8989

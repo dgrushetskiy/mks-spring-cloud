@@ -1,0 +1,105 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 60000
+      connectionTimeout: 30000
+      idle-timeout: 30000
+      idleTimeout: 30000
+      max-lifetime: 2000000
+      maxLifetime: 2000000
+      maximum-pool-size: 25
+      maximumPoolSize: 50
+      minimum-idle: 10
+      minimumIdle: 10
+      pool-name: SpringBootJPAHikariCP
+      poolName: SpringBootJPAHikariCP
+      schema: bill
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://127.0.0.1:5433/bill_ms_db
+    username: root
+  jpa:
+    generate-ddl: false
+    hibernate:
+      connection:
+        provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+      ddl-auto: validate
+    open-in-view: true
+    properties:
+      hibernate:
+        default_schema: bill
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+  liquibase:
+    change-log: classpath:db/changelog/changelog.xml
+    default-schema: bill
+    liquibase-schema: liquibase_schema
+    password: root
+    url: jdbc:postgresql://127.0.0.1:5433/bill_ms_db
+    user: root
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    time-zone: UTC
+  jmx:
+    enabled: false
+  main:
+    banner-mode: 'off'
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 200MB
+
+app:
+  cors:
+    allowedOrigins: http://localhost:3000
+debug: true
+
+logging:
+  file:
+    path: /home/bill-srv/log/app.log
+  level:
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: DEBUG
+    org:
+      hibernate:
+        SQL: debug
+        type:
+          descriptor:
+            sql: trace
+  pattern:
+    console: '"%d{yyyy-MM-dd HH:mm:ss} - %msg%n"'
+    file: '"%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"'
+management:
+  endpoints:
+    web:
+      base-path: /api/v1
+      exposure:
+        include: health,info,beans
+springdoc:
+  api-docs:
+    path: /api-docs
+  cache:
+    disabled: true
+  swagger-ui:
+    config-url: /api-docs/swagger-config
+    disable-swagger-default-url: true
+    path: /swagger-ui.html
+    url: /api-docs
+    use-root-path: true
+
+server:
+  servlet:
+    context-path: /bill-srv
+  compression:
+    enabled: true
+  port: 5002
+
