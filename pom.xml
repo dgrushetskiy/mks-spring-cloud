@@ -23,6 +23,8 @@
         <module>auth-srv</module>
         <module>bill-srv</module>
         <module>deposit-srv</module>
+        <module>documents-srv</module>
+        <module>file-srv</module>
         <module>notification-srv</module>
     </modules>
 

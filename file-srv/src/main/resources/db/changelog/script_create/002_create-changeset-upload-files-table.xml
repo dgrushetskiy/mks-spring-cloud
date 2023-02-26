@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="db/changelog/changelog.xml"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <property name="uuid_type" value="uuid" dbms="postgresql"/>
+    <property name="uuid_type" value="uuid" dbms="h2"/>
+
+    <property name="uuid_function" value="gen_random_uuid()" dbms="postgresql"/>
+    <property name="uuid_function" value="uuid()" dbms="h2"/>
+
+    <!-- Здесь мы позже напишем скрипт -->
+    <changeSet id="drop-table-files" author="dg">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="files"/>
+        </preConditions>
+        <dropTable cascadeConstraints="true" tableName="files" schemaName="files"/>
+    </changeSet>
+    <!-- create table files -->
+    <changeSet id="create-table-upload-files" author="dg">
+        <createTable tableName="upload_files" schemaName="files">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_upload_files"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="public_id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_file_uuid_unq"/>
+            </column>
+            <column name="checksum" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_file_checksum_unq"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="upload_link" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="size" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

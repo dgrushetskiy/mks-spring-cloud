@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="db/changelog/changelog.xml"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Здесь мы позже напишем скрипт -->
+    <property name="schema" value="public" global="true"/>
+    <changeSet logicalFilePath="db/changelog/changelog.xml" id="0" author="dg">
+        <tagDatabase tag="INITIAL"/>
+    </changeSet>
+
+    <include file="script_create/001_create-changeset-schema-db.xml" relativeToChangelogFile="true"/>
+    <include file="script_create/002_create-changeset-upload-files-table.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>
