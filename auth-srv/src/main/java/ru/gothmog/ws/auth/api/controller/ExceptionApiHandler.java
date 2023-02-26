@@ -31,14 +31,14 @@ public class ExceptionApiHandler {
   }
 
   @ExceptionHandler(ConflictException.class)
-  public ResponseEntity<ErrorMessage> conflictException(NotFoundException exception) {
+  public ResponseEntity<ErrorMessage> conflictException(ConflictException exception) {
     log.error(exception.getMessage(), exception);
     return ResponseEntity.status(HttpStatus.CONFLICT)
         .body(new ErrorMessage(exception.getMessage()));
   }
 
   @ExceptionHandler(BadRequestException.class)
-  public ResponseEntity<ErrorMessage> badRequestException(NotFoundException exception) {
+  public ResponseEntity<ErrorMessage> badRequestException(BadRequestException exception) {
     log.error(exception.getMessage(), exception);
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
         .body(new ErrorMessage(exception.getMessage()));
