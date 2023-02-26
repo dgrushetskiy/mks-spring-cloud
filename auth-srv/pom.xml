@@ -56,11 +56,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquibase.version}</version>
-        </dependency>
         <!-- cloud -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -99,7 +94,6 @@
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
             <version>2.2.10.RELEASE</version>
         </dependency>
-
         <!-- Migration DB -->
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -228,5 +222,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
