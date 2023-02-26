@@ -76,7 +76,7 @@ public class FileController {
         }
 
         // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
+        if (contentType == null) {
             contentType = "application/octet-stream";
         }
 
@@ -92,19 +92,18 @@ public class FileController {
         String checksum = DigestUtils.sha3_512Hex(is);
         Tika tika = new Tika();
         String detectedType = tika.detect(file.getBytes());
+        final UploadFileDto uploadFile = new UploadFileDto();
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
-                .path(fileName)
+                .path(String.valueOf(uploadFile.getPublicId()))
                 .toUriString();
-        final UploadFileDto uploadFile = UploadFileDto
-                .builder()
-                .checksum(checksum)
-                .fullName(fileName)
-                .fileType(detectedType)
-                .uploadLink(fileDownloadUri)
-                .size(file.getSize())
-                .build();
+
+        uploadFile.setChecksum(checksum);
+        uploadFile.setFullName(fileName);
+        uploadFile.setFileType(detectedType);
+        uploadFile.setUploadLink(fileDownloadUri);
+        uploadFile.setSize(file.getSize());
         uploadFileService.create(uploadFile);
         return uploadFile;
     }

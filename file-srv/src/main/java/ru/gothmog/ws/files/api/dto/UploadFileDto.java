@@ -14,7 +14,6 @@ import java.util.UUID;
  * A DTO for the {@link UploadFile} entity
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
