@@ -18,7 +18,7 @@ spring:
       transaction-isolation: TRANSACTION_READ_COMMITTED
     password: root
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://127.0.0.1:5433/bill_ms_db
+    url: jdbc:postgresql://127.0.0.1:5434/bill_ms_db
     username: root
   jpa:
     generate-ddl: false
@@ -41,7 +41,7 @@ spring:
     default-schema: bill
     liquibase-schema: liquibase_schema
     password: root
-    url: jdbc:postgresql://127.0.0.1:5433/bill_ms_db
+    url: jdbc:postgresql://127.0.0.1:5434/bill_ms_db
     user: root
   jackson:
     serialization:
